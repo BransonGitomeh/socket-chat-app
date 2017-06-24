@@ -4,7 +4,7 @@ function formatTime(time) {
     return moment.duration(moment(now, "DD/MM/YYYY HH:mm:ss").diff(moment(then, "DD/MM/YYYY HH:mm:ss"))).humanize()
 }
 
-const socket = io('http://localhost:3333');
+const socket = io("/");
 
 const app = {
     oninit(vnode) {
