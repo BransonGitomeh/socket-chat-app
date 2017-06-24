@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "scripts":{
+    "start":"node index.js",
+    "deploy":"git push -u origin master"
+  },
   "dependencies": {
     "express": "^4.15.3",
     "socket.io": "^2.0.3"

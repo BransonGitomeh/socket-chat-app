@@ -4,7 +4,7 @@ const app = express()
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
-server.listen(3333);
+server.listen(process.env.PORT || 3333);
 
 app.use(express.static("./assets"))
 
