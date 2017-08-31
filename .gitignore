@@ -1,3 +1,2 @@
 node_modules
-build
-assets/vendors/bower_components
+assets/build

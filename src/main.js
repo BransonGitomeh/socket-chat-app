@@ -5,25 +5,20 @@ import right_side_nav from "./components/right_side_nav"
 import content from "./components/content"
 import {
   dashboard
-} from "./routes/dashboard"
+} from "./app/dashboard"
 import {
-  contacts
-} from "./routes/contacts"
-import {
-  preview
-} from "./routes/preview"
-
-
-
+  auth
+} from "./app/auth"
 
 var layout = {
   view(vnode) {
     return m(".app", [
       // header here
-      m(header),
+      // m(header),
       m("section[id='main']", {
         style: {
-          'padding-bottom': '0px'
+          'padding-bottom': '0px',
+          'padding-top': '0px'
         }
       }, [
         // left_sidebar_here
@@ -40,70 +35,11 @@ var layout = {
 
 
 m.route(document.body, "/", {
-  "/manage": {
-    view() {
-      return m(layout, {
-        component: contacts
-      })
-    }
-  },
-  "/manage/:q_id": {
-    view() {
-      return m(layout, {
-        component: contacts
-      })
-    }
-  },
-  "/client": {
+  "/": {
     view() {
       return m(layout, {
         component: dashboard
       })
     }
-  },
-  "/": {
-    view() {
-      return m(layout, {
-        component: preview
-      })
-    }
-  },
-  "/sandbox/api": {
-    view() {
-      return m(layout, {
-        component: sandbox
-      })
-    }
-  },
-  // '/manage': {
-  //   view: () => m('.app', [
-  //     m(".test", "test"),
-  //     m("a", {
-  //       href: "/",
-  //       oncreate: m.route.link
-  //     }, "home")
-  //   ])
-  // }
+  }
 })
-
-
-// m.route(document.body, "/", {
-//   '/': {
-//     view: () => m('.app', [
-//       m(".test", "test"),
-//       m("a", {
-//         href: "/test",
-//         oncreate: m.route.link
-//       }, "test")
-//     ])
-//   },
-//   '/test': {
-//     view: () => m('.app', [
-//       m(".test", "test"),
-//       m("a", {
-//         href: "/",
-//         oncreate: m.route.link
-//       }, "home")
-//     ])
-//   }
-// })

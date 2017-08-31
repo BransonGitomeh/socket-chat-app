@@ -12,7 +12,7 @@ var content = {
   },
   view(vnode) {
     console.log(vnode.attrs)
-    return m(".container", m(vnode.attrs.component))
+    return m(vnode.attrs.component)
   }
 }
 
