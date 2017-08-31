@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "webpack -p && node index.js",
+    "start": "./node_modules/webpack/bin/webpack.js -p && node index.js",
     "dev": "webpack --watch & nodemon index.js",
     "deploy": "git push -u origin master"
   },
