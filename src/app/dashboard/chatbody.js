@@ -1,10 +1,21 @@
-export default (m, message_history) => ({
+function scrollSmoothToBottom(id) {
+  var div = document.getElementById(id);
+  $('#' + id)
+    .animate({
+      scrollTop: div.scrollHeight - div.clientHeight
+    }, 500);
+}
+
+export default (m, {
+  selectedContact
+}) => ({
+  oncreate: () => scrollSmoothToBottom('mbl-messagesx'),
   view: () => m(".m-body", [
     m("header.mb-header", [
       m(".mbh-user.clearfix", [
-        m("img[alt=''][src='img/demo/profile-pics/2.jpg']"),
+        m(`img[alt=''][src=${selectedContact.pic}]`),
         m(".p-t-5",
-          "Ann Watkinson"
+          selectedContact.full_name
         )
       ]),
       m("ul.actions", [
@@ -44,70 +55,35 @@ export default (m, message_history) => ({
     ]),
     m(".mb-list", [
       m(".mbl-messagesx", {
+        id: "mbl-messagesx",
         'data-simplebar': true,
         style: {
+          'padding-top': "5px",
           'padding-left': "20px",
           height: '88%',
         }
       }, [
-        m(".mblm-item.mblm-item-left", [
-          m("div", "test"),
-          m("small",
-            "5:47 PM"
-          )
-        ]),
-        m(".mblm-item.mblm-item-right", {
-          style: {
-            'padding-right': '20px'
+        selectedContact.thread.map(item => {
+          if (item.id === selectedContact.id) {
+            return m(".mblm-item.mblm-item-left", [
+              m("div", "test"),
+              m("small",
+                "5:47 PM"
+              )
+            ])
+          } else {
+            return m(".mblm-item.mblm-item-right", {
+              style: {
+                'padding-right': '20px'
+              }
+            }, [
+              m("div", "test"),
+              m("small",
+                "5:49 PM"
+              )
+            ])
           }
-        }, [
-          m("div", "test"),
-          m("small",
-            "5:49 PM"
-          )
-        ]),
-        m(".mblm-item.mblm-item-right", {
-          style: {
-            'padding-right': '20px'
-          }
-        }, [
-          m("div", "test"),
-          m("small",
-            "5:55 PM"
-          )
-        ]),
-        m(".mblm-item.mblm-item-left", [
-          m("div", "test"),
-          m("small",
-            "6:10 PM"
-          )
-        ]),
-        m(".mblm-item.mblm-item-left", [
-          m("div",
-            m(".mblmi-img",
-              m("img[alt=''][src='http://img1.picturescafe.com/pc/016/009.jpg']")
-            )
-          ),
-          m("small",
-            "6:10 PM"
-          )
-        ]),
-        m(".mblm-item.mblm-item-left", [
-          m("div", "test"),
-          m("small",
-            "6:11 PM"
-          )
-        ]),
-        m(".mblm-item.mblm-item-right", {
-          style: {
-            'padding-right': '20px'
-          }
-        }, [
-          m("div", "test"),
-          m("small",
-            "6:15 PM"
-          )
-        ])
+        })
       ]),
       m(".mbl-compose", {
         style: {

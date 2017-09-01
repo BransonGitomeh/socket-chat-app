@@ -1,5 +1,10 @@
-export default (m, contacts) => ({
+export default (m, {
+  contacts,
+  selectContact,
+  selectedContact
+}) => ({
   view() {
+    console.log("sidebar got", contacts)
     return m(".m-sidebar", [
       m("header", [
         m("h2.hidden-xs",
@@ -48,19 +53,25 @@ export default (m, contacts) => ({
         }
       }, [
 
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0].map(item => m("a.list-group-item.media[href='']", [
+        contacts.map(contact => m("li.list-group-item.media", {
+          class: selectedContact.id == contact.id ? 'active' : "",
+          onclick: (e) => {
+            e.preventDefault()
+            selectContact(contact)
+          }
+        }, [
           m(".pull-left",
-            m("img.lgi-img[alt=''][src='img/demo/profile-pics/4.jpg']")
+            m(`img.lgi-img[alt=''][src='${contact.pic}']`)
           ),
           m(".media-body", [
             m(".lgi-heading",
-              "Davil Parnell"
+              contact.full_name
             ),
             m("small.lgi-text",
-              "Fierent fastidii recteque ad pro"
+              contact.last_message.content
             ),
             m("small.ms-time",
-              "05:00 PM"
+              contact.last_message.time
             )
           ])
         ]))
