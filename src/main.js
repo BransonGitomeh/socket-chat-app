@@ -10,6 +10,40 @@ import {
   auth
 } from "./app/auth"
 
+const socket = io("/");
+var user_details = new PouchDB('user_details');
+var remoteCouch = false;
+
+const token = "abcd"
+socket.on('auth', () => console.log("asking for auth"))
+socket.emit('auth', {
+  token
+})
+socket.on('user_details', (data) => {
+  console.log("recieved details", data)
+  data._id = new Date()
+  user_details.put(data, function callback(err, result) {
+    if (!err) {
+      console.log('Successfully saved user_details!', data);
+
+      socket.emit('get_contacts', {
+        id: data.id,
+        token
+      })
+      socket.on('get_contacts', (data) => {
+        console.log(data)
+      })
+    } else {
+      console.log(err)
+    }
+  });
+
+})
+
+
+
+console.log(socket)
+
 var layout = {
   view(vnode) {
     return m(".app", [
@@ -35,11 +69,5 @@ var layout = {
 
 
 m.route(document.body, "/", {
-  "/": {
-    view() {
-      return m(layout, {
-        component: dashboard
-      })
-    }
-  }
+  "/": dashboard
 })
