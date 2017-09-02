@@ -49,7 +49,6 @@ var app = {
         user_details.put(data, function callback(err, result) {
           if (!err) {
             console.log('Successfully saved user_details!', data);
-
             m.socket.emit('get_contacts', {
               id: data.id,
               token
@@ -57,6 +56,7 @@ var app = {
             m.socket.on('get_contacts', (data) => {
               console.log('get_contacts', data)
               attrs.contacts = data
+              console.log(data)
               attrs.selectedContact = attrs.contacts[0]
               m.redraw()
             })
@@ -70,7 +70,7 @@ var app = {
     }
 
     attrs.contacts = []
-    attrs.selectedContact = attrs.contacts[0]
+    // attrs.selectedContact = attrs.contacts[0]
     attrs.selectContact = (contact) => {
       // show last message and start getting last message history
       console.log("new contact selected", contact)
@@ -78,18 +78,18 @@ var app = {
       attrs.selectedContact = contact
     }
 
-    attrs.selectedContact = chat
+    attrs.selectedComponent = chat
 
     if (attrs.token) {
-      attrs.selectedContact = chat(m, attrs)
+      attrs.selectedComponent = chat(m, attrs)
     } else {
-      attrs.selectedContact = login(m, attrs)
+      attrs.selectedComponent = login(m, attrs)
     }
   },
   view: ({
     attrs
   }) => {
-    return m(".app", m(attrs.selectedContact))
+    return m(".app", m(attrs.selectedComponent))
   }
 }
 

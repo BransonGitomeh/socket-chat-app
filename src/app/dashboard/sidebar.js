@@ -34,6 +34,16 @@ export default (m, {
                 m("a[href='']",
                   "Settings"
                 )
+              ),
+              m("li",
+                m("a", {
+                    onclick() {
+                      localStorage.removeItem('token')
+                      location.reload()
+                    }
+                  },
+                  "Log out"
+                )
               )
             ])
           ])

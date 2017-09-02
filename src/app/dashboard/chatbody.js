@@ -10,6 +10,9 @@ export default (m, {
   selectedContact
 }) => ({
   oncreate: () => scrollSmoothToBottom('mbl-messagesx'),
+  oninit() {
+    console.log(selectedContact)
+  },
   view: () => m(".m-body", [
     m("header.mb-header", [
       m(".mbh-user.clearfix", [
@@ -62,29 +65,27 @@ export default (m, {
           'padding-left': "20px",
           height: '88%',
         }
-      }, [
-        selectedContact.thread.map(item => {
-          if (item.id === selectedContact.id) {
-            return m(".mblm-item.mblm-item-left", [
-              m("div", "test"),
-              m("small",
-                "5:47 PM"
-              )
-            ])
-          } else {
-            return m(".mblm-item.mblm-item-right", {
-              style: {
-                'padding-right': '20px'
-              }
-            }, [
-              m("div", "test"),
-              m("small",
-                "5:49 PM"
-              )
-            ])
-          }
-        })
-      ]),
+      }, [!selectedContact ? null : selectedContact.thread.map(item => {
+        if (item.id === selectedContact.id) {
+          return m(".mblm-item.mblm-item-left", [
+            m("div", "test"),
+            m("small",
+              "5:47 PM"
+            )
+          ])
+        } else {
+          return m(".mblm-item.mblm-item-right", {
+            style: {
+              'padding-right': '20px'
+            }
+          }, [
+            m("div", "test"),
+            m("small",
+              "5:49 PM"
+            )
+          ])
+        }
+      })]),
       m(".mbl-compose", {
         style: {
           height: '100hv'

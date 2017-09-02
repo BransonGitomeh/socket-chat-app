@@ -4,14 +4,21 @@ export default (m) => {
       vnode.state.email = ''
       vnode.state.password = ''
       vnode.state.rememberSession = false
-
-      m.socket.emit('login', vnode.state)
     },
     view(vnode) {
       return m('form', {
         onsubmit(e) {
           e.preventDefault()
-          console.log(vnode.state)
+          m.socket.emit('login', vnode.state)
+          m.socket.on('login', ({
+            token,
+            err
+          }) => {
+            if (!err) {
+              localStorage.setItem('token', token)
+              location.reload();
+            }
+          })
         }
       }, [
         m(".input-group.m-b-20", [
@@ -61,7 +68,21 @@ export default (m) => {
       vnode.state.password = ''
     },
     view(vnode) {
-      return m("form", [
+      return m("form", {
+        onsubmit(e) {
+          e.preventDefault()
+          m.socket.emit('register', vnode.state)
+          m.socket.on('register', ({
+            token,
+            err
+          }) => {
+            if (!err) {
+              localStorage.setItem('token', token)
+              location.reload();
+            }
+          })
+        }
+      }, [
         m(".input-group.m-b-20", [
           m("span.input-group-addon",
             m("i.zmdi.zmdi-account")
@@ -107,7 +128,21 @@ export default (m) => {
       vnode.state.email = ''
     },
     view(vnode) {
-      return m("form", [
+      return m("form", {
+        onsubmit(e) {
+          e.preventDefault()
+          m.socket.emit('register', vnode.state)
+          m.socket.on('register', ({
+            token,
+            err
+          }) => {
+            if (!err) {
+              localStorage.setItem('token', token)
+              location.reload();
+            }
+          })
+        }
+      }, [
         m("p.text-left",
           "If you enter the right email, the password reset link should be on its way!!"
         ),
@@ -135,13 +170,6 @@ export default (m) => {
     oninit(vnode) {
       vnode.state.login = true
       vnode.state.selectedComponent = registerComponent
-
-      // vnode.state.form = {
-      //   names = ''
-      //   email = ''
-      //   password = ''
-      //   ememberSession = ''
-      // }
     },
     view: (vnode) => {
       if (vnode.state.login === true) {

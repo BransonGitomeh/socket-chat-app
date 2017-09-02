@@ -45,6 +45,12 @@ io.on('connection', function (socket) {
     })
   })
 
+  socket.on('login', function (data) {
+    socket.emit('login', {
+      token: '123456'
+    })
+  })
+
   socket.on('get_contacts', function () {
     socket.emit('get_contacts', [{
       id: '1',
