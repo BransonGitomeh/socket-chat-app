@@ -131,13 +131,12 @@ export default (m) => {
       return m("form", {
         onsubmit(e) {
           e.preventDefault()
-          m.socket.emit('register', vnode.state)
-          m.socket.on('register', ({
+          m.socket.emit('forgotPass', vnode.state)
+          m.socket.on('forgotPass', ({
             token,
             err
           }) => {
             if (!err) {
-              localStorage.setItem('token', token)
               location.reload();
             }
           })

@@ -51,6 +51,18 @@ io.on('connection', function (socket) {
     })
   })
 
+  socket.on('register', function (data) {
+    socket.emit('register', {
+      token: '123456'
+    })
+  })
+
+  socket.on('forgotPass', function (data) {
+    socket.emit('forgotPass', {
+      message: 'Emails should be on their way now'
+    })
+  })
+
   socket.on('get_contacts', function () {
     socket.emit('get_contacts', [{
       id: '1',
