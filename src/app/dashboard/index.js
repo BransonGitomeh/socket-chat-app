@@ -2,10 +2,6 @@ import sidebar from './sidebar'
 import chatbody from './chatbody'
 
 export default (m, store) => ({
-  oninit(vnode) {
-    console.info("oninit")
-
-  },
   view(vnode) {
     return m(".containerx.container-alt",
       m(".messages.card", {
@@ -19,8 +15,7 @@ export default (m, store) => ({
           contacts: store.contacts,
           selectedContact: store.selectedContact,
           selectContact: store.selectContact
-        })),
-        m(chatbody(m, {
+        })), !store.selectedContact ? null : m(chatbody(m, {
           selectedContact: store.selectedContact,
         }))
       ])

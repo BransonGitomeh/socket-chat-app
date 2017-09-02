@@ -1,0 +1,194 @@
+export default (m, {
+  switcher,
+  login,
+  register,
+  forgotPass,
+  names = '',
+  email = '',
+  password = '',
+  rememberSession = ''
+}) => {
+
+  m.socket.emit('login')
+  const loginComponent = m('form', {
+    submit(e) {
+      e.preventDefault()
+      console.log({
+        names,
+        email,
+        password,
+        rememberSession
+      })
+    }
+  }, [
+    m(".input-group.m-b-20", [
+      m("span.input-group-addon",
+        m("i.zmdi.zmdi-account")
+      ),
+      m(".fg-line",
+        m("input.form-control[placeholder='Email'][type='email']", {
+          onchange: m.withAttr('value', v => switcher({
+            key: 'email',
+            value: v
+          })),
+          value: email
+        })
+      )
+    ]),
+    m(".input-group.m-b-20", [
+      m("span.input-group-addon",
+        m("i.zmdi.zmdi-male")
+      ),
+      m(".fg-line",
+        m("input.form-control[placeholder='Password'][type='password']", {
+          onchange: m.withAttr('value', v => switcher({
+            key: 'password',
+            value: v
+          })),
+          value: password
+        })
+      )
+    ]),
+    m(".checkbox",
+      m("label", [
+        m("input[type='checkbox'][value='']", {
+          onchange: m.withAttr('checked', v => rememberSession = v),
+          value: rememberSession
+        }),
+        m("i.input-helper"),
+        "Remember your session"
+      ]),
+    ),
+    m("a.btn.btn-login.btn-success.btn-float[href='']",
+      m("i.zmdi.zmdi-arrow-forward")
+    )
+  ])
+
+
+  const registerComponent = [
+    m(".input-group.m-b-20", [
+      m("span.input-group-addon",
+        m("i.zmdi.zmdi-account")
+      ),
+      m(".fg-line",
+        m("input.form-control[placeholder='Username'][type='text']", {
+          onchange: m.withAttr('value', v => names = v),
+          value: names
+        })
+      )
+    ]),
+    m(".input-group.m-b-20", [
+      m("span.input-group-addon",
+        m("i.zmdi.zmdi-email")
+      ),
+      m(".fg-line",
+        m("input.form-control[placeholder='Email Address'][type='text']", {
+          onchange: m.withAttr('value', v => email = v),
+          value: email
+        })
+      )
+    ]),
+    m(".input-group.m-b-20", [
+      m("span.input-group-addon",
+        m("i.zmdi.zmdi-male")
+      ),
+      m(".fg-line",
+        m("input.form-control[placeholder='Password'][type='password']", {
+          onchange: m.withAttr('value', v => password = v),
+          value: password
+        })
+      )
+    ]),
+    m("a.btn.btn-login.btn-success.btn-float[href='']",
+      m("i.zmdi.zmdi-check")
+    )
+  ]
+
+  const forgotPassComponent = [
+    m("p.text-left",
+      "If you enter the right email, the password reset link should be on its way!!"
+    ),
+    m(".input-group.m-b-20", [
+      m("span.input-group-addon",
+        m("i.zmdi.zmdi-email")
+      ),
+      m(".fg-line",
+        m("input.form-control[placeholder='Email Address'][type='email']", {
+          onchange: m.withAttr('value', v => email = v),
+          value: email
+        })
+      )
+    ]),
+    m("a.btn.btn-login.btn-success.btn-float[href='']",
+      m("i.zmdi.zmdi-check")
+    )
+  ]
+
+
+
+  return {
+    oninit(vnode) {
+      vnode.state.login = true
+      vnode.state.selectedComponent = registerComponent
+    },
+    view: (vnode) => {
+      if (vnode.state.login === true) {
+        vnode.state.selectedComponent = loginComponent
+      } else if (vnode.state.register === true) {
+        vnode.state.selectedComponent = registerComponent
+      } else if (vnode.state.forgotPass === true) {
+        vnode.state.selectedComponent = forgotPassComponent
+      }
+
+      return m(".login-content", [
+        m(".lc-block.toggled", [
+          m(".lcb-form", vnode.state.selectedComponent),
+          m(".lcb-navigation", [(vnode.state.login === true ? m("a[href='javascript:void(0);'][data-ma-action='login-switch'][data-ma-block='#l-register']", {
+              onclick() {
+                vnode.state.register = true
+                vnode.state.login = false
+                vnode.state.forgotPass = false
+                m.redraw()
+              }
+            }, [
+              m("i.zmdi.zmdi-plus"),
+              m("span",
+                "Register"
+              )
+            ]) : m("a[href='javascript:void(0);'][data-ma-action='register-switch'][data-ma-block='#l-register']", {
+              onclick() {
+                console.log('login')
+                vnode.state.register = false
+                vnode.state.login = true
+                vnode.state.forgotPass = false
+                m.redraw()
+              }
+            }, [
+              m("i.zmdi.zmdi-sign-in"),
+              m("span",
+                "Login"
+              )
+            ])),
+
+            m("a[href='javascript:void(0);'][data-ma-action='login-switch'][data-ma-block='#l-forget-password']", {
+              onclick() {
+                console.log('forgotPass')
+                vnode.state.register = false
+                vnode.state.login = false
+                vnode.state.forgotPass = true
+                m.redraw()
+              }
+            }, [
+              m("i",
+                "?"
+              ),
+              m("span",
+                "Forgot Password"
+              )
+            ])
+          ])
+        ])
+      ])
+    }
+  }
+}

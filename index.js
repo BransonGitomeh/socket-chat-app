@@ -47,13 +47,56 @@ io.on('connection', function (socket) {
 
   socket.on('get_contacts', function () {
     socket.emit('get_contacts', [{
-      id: '123456',
+      id: '1',
       full_name: "first_name",
       last_message: {
         time: "108",
         content: "awesomnes"
       },
-      pic: "cool url here"
+      pic: "https://www.communitylandtrust.ca/wp-content/uploads/2015/10/placeholder.png",
+      thread: [{
+        id: '123456',
+        type: "text",
+        content: "hey this is so cool"
+      }, {
+        id: '1234567',
+        type: "text",
+        content: "hey this is so cool"
+      }]
+    }, {
+      id: '2',
+      full_name: "first_name",
+      last_message: {
+        time: "108",
+        content: "awesomnes"
+      },
+      pic: "https://www.communitylandtrust.ca/wp-content/uploads/2015/10/placeholder.png",
+      thread: [{
+        id: '123456',
+        type: "text",
+        content: "hey this is so cool"
+      }, {
+        id: '1234567',
+        type: "text",
+        content: "hey this is so cool"
+      }]
+    }, {
+      id: '3',
+      full_name: "first_name",
+      last_message: {
+        time: "108",
+        content: "awesomnes"
+      },
+      pic: "https://www.communitylandtrust.ca/wp-content/uploads/2015/10/placeholder.png",
+      thread: [{
+        id: '123456',
+        type: "text",
+        content: "hey this is so cool"
+      }, {
+        id: '1234567',
+        type: "text",
+        content: "hey this is so cool"
+      }]
     }])
   })
 

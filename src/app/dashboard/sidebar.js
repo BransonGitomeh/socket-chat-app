@@ -4,7 +4,6 @@ export default (m, {
   selectedContact
 }) => ({
   view() {
-    console.log("sidebar got", contacts)
     return m(".m-sidebar", [
       m("header", [
         m("h2.hidden-xs",
