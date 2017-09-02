@@ -15,9 +15,9 @@ export default (m, store) => ({
           contacts: store.contacts,
           selectedContact: store.selectedContact,
           selectContact: store.selectContact
-        })), !store.selectedContact ? null : m(chatbody(m, {
-          selectedContact: store.selectedContact,
-        }))
+        })), !store.selectedContact ? null : m(chatbody, {
+          store
+        })
       ])
     )
   }

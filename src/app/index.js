@@ -81,6 +81,39 @@ var app = {
     attrs.selectedComponent = chat
 
     if (attrs.token) {
+      attrs.sendMessage = ({
+        message
+      }) => {
+        console.log('setting')
+        attrs.sending = true
+        m.redraw()
+        // show message on ui with indicator that it has not yet left the guys laptop
+        m.socket.emit('send_message', {
+          message: message,
+          selectedContact: attrs.selectedContact
+        })
+        m.socket.on('send_message', ({
+            token,
+            status
+          }) => {
+            // set state to show message was sent,
+          }),
+          m.socket.on('arrived', ({
+            token,
+            status
+          }) => {
+            // set state to show message arrived on phone, double tick,
+          }),
+          m.socket.on('read', ({
+            token,
+            status
+          }) => {
+            // set state to show message was read,
+          })
+      }
+
+      console.log(attrs)
+
       attrs.selectedComponent = chat(m, attrs)
     } else {
       attrs.selectedComponent = login(m, attrs)
